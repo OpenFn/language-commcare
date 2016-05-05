@@ -26,33 +26,23 @@ export function execute(...operations) {
 
 }
 
-/**
- * Exequet an SQL statement
- * @example
- * execute(
- *   sql(sqlQuery)
- * )(state)
- * @constructor
- * @param {object} sqlQuery - Payload data for the message
- * @returns {Operation}
- */
-export function addRow(db, table, rowData) {
+export function submit(formId, formData) {
 
   return state => {
 
-    const action = "ADDROW";
-    const body = expandReferences(rowData)(state);
+    const jsonBody = expandReferences(formData)(state);
+    const body = convertJsonToXml(jsonBody);
 
-    const { account, authToken, apiVersion } = state.configuration;
+    const { applicationName, username, password } = state.configuration;
 
-    const url = `https://reportsapi.commcare.com/api/`.concat(account, '/', db, '/', table)
+    const url = `https://www.commcarehq.org/a/`.concat(applicationName, '/receiver/submission/')
 
     console.log("POST URL:");
     console.log(url)
-    console.log("POST Parameters:");
+    console.log("POST body:");
     console.log(body)
 
-    return post({ url, body, authToken, apiVersion, action })
+    return post({ url, body, username, password })
     .then((result) => {
       console.log("Success:", result);
       return { ...state, references: [ result, ...state.references ] }
