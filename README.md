@@ -3,6 +3,10 @@ Language CommCare
 
 Language Pack for sending messages using the commcare API.
 
+https://confluence.dimagi.com/display/commcarepublic/Submission+API
+
+https://bitbucket.org/javarosa/javarosa/wiki/FormSubmissionAPI
+
 Documentation
 -------------
 
