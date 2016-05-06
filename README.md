@@ -11,12 +11,13 @@ Documentation
 -------------
 
 ### submit
-wip!
+WIP: I haven't wired up the output of an expression to the client yet. The
+expression will likely look something like this:
 
 ```js
-submit("formId", fields(
-  field("Subject", dataValue("formId")),
-  field("Status", "Closed")
+submit(
+  form(...),
+  fields(...)
 ))
 ```
 
