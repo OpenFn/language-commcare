@@ -34,13 +34,13 @@ export function submit(formData) {
     const jsonBody = { "data": expandReferences(formData)(state) };
     const body = parser.toXml(jsonBody);
 
-    const { applicationName, username, password } = state.configuration;
+    const { applicationName, username, password, appId } = state.configuration;
 
-    const url = `https://www.commcarehq.org/a/`.concat(applicationName, '/receiver/submission/')
+    const url = `https://www.commcarehq.org/a/`.concat(applicationName, '/receiver/',appId,'/')
 
-    console.log("posting to url: ". concat(url));
-    console.log("raw JSON body: ".concat(jsonBody));
-    console.log("x-form submission: ".concat(body));
+    console.log("  ~~~ ! posting to url: ". concat(url));
+    console.log("  ~~~ ! raw JSON body: ".concat(JSON.stringify(jsonBody)));
+    console.log("  ~~~ ! x-form submission: ".concat(body));
 
     return post({ url, body, username, password })
     .then((result) => {
