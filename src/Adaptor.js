@@ -38,8 +38,9 @@ export function submit(formData) {
 
     const url = `https://www.commcarehq.org/a/`.concat(applicationName, '/receiver/submission/')
 
-    console.log("Posting to url: ". concat(url));
-    console.log("With body content: ".concat(body));
+    console.log("posting to url: ". concat(url));
+    console.log("raw JSON body: ".concat(jsonBody));
+    console.log("x-form submission: ".concat(body));
 
     return post({ url, body, username, password })
     .then((result) => {

@@ -7,8 +7,45 @@ https://confluence.dimagi.com/display/commcarepublic/Submission+API
 
 https://bitbucket.org/javarosa/javarosa/wiki/FormSubmissionAPI
 
+Accepted X-Form Spec from Dimagi: http://dimagi.github.io/xform-spec
+Accepted X-Form Spec for Cases from Dimagi: https://github.com/dimagi/commcare/wiki/casexml20
+
+
 Documentation
 -------------
+
+simple body target:
+```xml
+<data xmlns="http://openrosa.org/formdesigner/39A2CA97-2EB8-4A9C-A0D1-6AA666666A66">
+    <firstname>Something</firstname>
+    <lastname>Else</lastname>
+    <age>29</age>
+</data>
+```
+
+complex body target:
+```xml
+<?xml version='1.0' ?>
+<data uiVersion="1" version="17" name="New Form" xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/1DFD8610-91E3-4409-BF8B-02D3B4FF3530">
+    <foo>bar</foo>
+    <n0:case case_id="ddb8e2b3-7ce0-43e4-ad45-d7a2eebe9169" user_id="user-xxx-eve" date_modified="2013-04-19T16:53:02.799-04" xmlns:n0="http://commcarehq.org/case/transaction/v2">
+        <n0:create>
+            <n0:case_name>bar</n0:case_name>
+            <n0:owner_id>user-xxx-eve</n0:owner_id>
+            <n0:case_type>member</n0:case_type>
+        </n0:create>
+    </n0:case>
+    <n1:meta xmlns:n1="http://openrosa.org/jr/xforms">
+        <n1:deviceID>A00000245706EE</n1:deviceID>
+        <n1:timeStart>2013-04-19T16:52:41.000-04</n1:timeStart>
+        <n1:timeEnd>2013-04-19T16:53:02.799-04</n1:timeEnd>
+        <n1:username>eve</n1:username>
+        <n1:userID>user-xxx-eve</n1:userID>
+        <n1:instanceID>b58df19c-efd5-4ecf-9581-65dda8b8787c</n1:instanceID>
+        <n2:appVersion xmlns:n2="http://commcarehq.org/xforms">CommCare ODK, version "2.4.1"(10083). App v19. CommCare Version 2.4. Build 10083, built on: March-12-2013</n2:appVersion>
+    </n1:meta>
+</data>
+```
 
 ### submit
 Here we're just building the most basic JSON object, that will be converted to an XML object and posted as the <data /> element.
