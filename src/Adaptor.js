@@ -52,6 +52,6 @@ export function submit(formData) {
 }
 
 export {
-  field, fields, sourceValue,
+  field, fields, sourceValue, each,
   merge, dataPath, dataValue, lastReferenceValue
 } from 'language-common';
