@@ -1,7 +1,7 @@
 import { execute as commonExecute, expandReferences } from 'language-common';
 import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
-import parser from 'xml2json';
+import js2xmlparser from 'js2xmlparser';
 
 /**
  * Execute a sequence of operations.
@@ -31,16 +31,16 @@ export function submit(formData) {
 
   return state => {
 
-    const jsonBody = { "data": expandReferences(formData)(state) };
-    const body = parser.toXml(jsonBody);
+    const jsonBody = expandReferences(formData)(state);
+    const body = js2xmlparser("data", jsonBody);
 
     const { applicationName, username, password, appId } = state.configuration;
 
     const url = `https://www.commcarehq.org/a/`.concat(applicationName, '/receiver/',appId,'/')
 
-    console.log(" ~~~ posting to url: ". concat(url));
-    console.log(" ~~~ raw JSON body: ".concat(JSON.stringify(jsonBody)));
-    console.log(" ~~~ x-form submission: ".concat(body));
+    console.log("Posting to url: ". concat(url));
+    console.log("Raw JSON body: ".concat(JSON.stringify(jsonBody)));
+    console.log("X-form submission: ".concat(body));
 
     return post({ url, body, username, password })
     .then((result) => {
