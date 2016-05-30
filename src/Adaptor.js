@@ -3,6 +3,8 @@ import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
 
+/** @module Adaptor */
+
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for commcare.
