@@ -3,14 +3,15 @@ import {
   expandReferences
 } from 'language-common';
 import {
-  cPost
+  post as clientPost
 } from './Client';
 import {
   resolve as resolveUrl
 } from 'url';
 import js2xmlparser from 'js2xmlparser';
 import Adaptor from 'language-http';
-const {get,
+const {
+  get,
   post
 } = Adaptor;
 
@@ -64,7 +65,7 @@ export function submit(formData) {
     console.log("Raw JSON body: ".concat(JSON.stringify(jsonBody)));
     console.log("X-form submission: ".concat(body));
 
-    return cPost({
+    return clientPost({
         url,
         body,
         username,
@@ -81,13 +82,16 @@ export function submit(formData) {
 }
 
 /**
- * Make a GET request and POST it somewhere else
+ * Make a GET request to CommCare's Reports Api
+ * and POST the response it somewhere else
  * @example
  * execute(
- *   fetchReportData(reportId, postUrl)
+ *   fetchReportData(reportId, params, postUrl)
  * )(state)
  * @constructor
- * @param {object} params - data to make the fetch
+ * @param {String} reportId - API name of the report.
+ * @param {Object} params - Query params, incl: limit, offset, and custom report filters.
+ * @param {String} postUrl - Url to which the response object will be posted.
  * @returns {Operation}
  */
 export function fetchReportData(reportId, params, postUrl) {
@@ -100,7 +104,9 @@ export function fetchReportData(reportId, params, postUrl) {
     },
     callback: function(state) {
       var reportData = state.response.body;
-      return post(postUrl, { body: reportData })
+      return post(postUrl, {
+          body: reportData
+        })(state)
         .then(function(state) {
           delete state.response
           console.log("fetchReportData succeeded.")

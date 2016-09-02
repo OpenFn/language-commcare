@@ -1,6 +1,6 @@
 {
   "name": "language-commcare",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "commcare Language Pack for OpenFn",
   "main": "lib/index.js",
   "scripts": {
