@@ -1,7 +1,9 @@
 Language CommCare
 =================
 
-Language Pack for sending messages using the commcare API.
+Language Pack for interacting with the CommCare API.
+
+https://confluence.dimagi.com/display/commcarepublic/Download+Report+Data
 
 https://confluence.dimagi.com/display/commcarepublic/Submission+API
 
@@ -13,6 +15,18 @@ Accepted X-Form Spec for Cases from Dimagi: https://github.com/dimagi/commcare/w
 
 Documentation
 -------------
+
+## `fetchReportData` to pull aggregate data from CommCare with a timed job run
+
+It takes 3 arguments: reportId, params, and postUrl.
+
+```js
+fetchReportData(
+  "reportId",
+  { "limit": 10, "offset": 2, "state": "Vermont" },
+  "http://www.openfn.org/inbox/secret-uuid"
+)
+```
 
 simple body target:
 ```xml

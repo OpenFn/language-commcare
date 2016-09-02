@@ -100,9 +100,9 @@ export function fetchReportData(reportId, params, postUrl) {
     },
     callback: function(state) {
       // Pick submissions out in order to avoid `post` overwriting `response`.
-      var submissions = [state.response.body];
+      var reportData = [state.response.body];
       // return submissions
-      return submissions.reduce(function(acc, item) {
+      return reportData.reduce(function(acc, item) {
           return acc.then(
             post(postUrl, {
               body: item
@@ -111,7 +111,8 @@ export function fetchReportData(reportId, params, postUrl) {
         }, Promise.resolve(state))
         .then(function(state) {
           delete state.response
-          console.log("fetchSubmissions succeeded.")
+          console.log("fetchReportData succeeded.")
+          console.log("Posted to: ".concat(postUrl))
           return state;
         })
     }
