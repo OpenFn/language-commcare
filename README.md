@@ -61,34 +61,24 @@ complex body target:
 </data>
 ```
 
+## Submitting data to CommCare HQ
+
 ### submit
 Here we're just building the most basic JSON object, that will be converted to an XML object and posted as the <data /> element.
 ```js
 submit(
   fields(
-    field("name", dataValue("formId")),
-    field("uiVersion", "1"),
-    field("xmlns", "http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9"),
-    field("xmlns:jrm", "http://dev.commcarehq.org/jr/xforms"),
+    field("@", function(state) {
+      return {
+        "xmlns": "http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9"
+      };
+    }),
     field("paitent_namentosh", dataValue("first_name")),
     field("question2", "Some answer here."),
     field("question3", "HKS"),
     field("question4", "item1"),
     field("question5", 69855),
-    field("question6", 12),
-    field("n0:meta", fields(
-      field("xmlns:n0", "http://openrosa.org/jr/xforms"),
-      field("n0:deviceID", "358239055789384"),
-      field("n0:timeStart", "2015-08-21T16:21:59.807+02"),
-      field("n0:timeEnd", "2015-08-21T16:22:15.987+02"),
-      field("n0:username", "openfn"),
-      field("n0:userID", "5fe615b3af2834cb5dca59f7466d6174"),
-      field("n0:instanceID", dataValue(some_unique_id),
-      field("n1:appVersion", fields(
-        field("xmlns:n1", "http://commcarehq.org/xforms"),
-        field("$t", "CommCare ODK, version \"2.22.0\"(370023). App v9. CommCare Version 2.22. Build 370023, built on: July-22-2015")
-      ))
-    ))
+    field("question6", 12)
   )
 )
 ```
