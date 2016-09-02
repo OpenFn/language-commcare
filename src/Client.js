@@ -1,6 +1,6 @@
 import request from 'superagent'
 
-export function post({ url, body, username, password }) {
+export function cPost({ url, body, username, password }) {
   return new Promise((resolve, reject) => {
     request.post(url)
     .auth(username, password)

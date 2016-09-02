@@ -1,6 +1,6 @@
 {
   "name": "language-commcare",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "commcare Language Pack for OpenFn",
   "main": "lib/index.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "JSONPath": "^0.10.0",
     "js2xmlparser": "^1.0.0",
     "language-common": "github:openfn/language-common",
+    "language-http": "github:openfn/language-http",
     "lodash-fp": "^0.10.2",
     "superagent": "^1.7.2"
   },
