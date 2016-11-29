@@ -16,6 +16,21 @@ Accepted X-Form Spec for Cases from Dimagi: https://github.com/dimagi/commcare/w
 Documentation
 -------------
 
+## configuration
+
+The "appId" is the UUID which designates your commcare project as different from
+everyone elses. It can be found in the URL of your application when you first
+enter it from the project screen. I.e., the last part of this url: `https://www.commcarehq.org/a/YOUR_PROJECT/apps/view/YOUR_APP_ID/`
+
+```json
+{
+  "appId": "the-long-uuid-in-the-url-that-designates-a-unique-commcare-project",
+  "password": "shhh",
+  "username": "openfn-test",
+  "applicationName": "some-proof-of-concept"
+}
+```
+
 ## `fetchReportData` to pull aggregate data from CommCare with a timed job run
 
 It takes 3 arguments: reportId, params, and postUrl.
