@@ -22,11 +22,13 @@ The "appId" is the UUID which designates your commcare project as different from
 everyone elses. It can be found in the URL of your application when you first
 enter it from the project screen. I.e., the last part of this url: `https://www.commcarehq.org/a/YOUR_PROJECT/apps/view/YOUR_APP_ID/`
 
+Note that the username is your full email address.
+
 ```json
 {
   "appId": "the-long-uuid-in-the-url-that-designates-a-unique-commcare-project",
   "password": "shhh",
-  "username": "openfn-test",
+  "username": "test@openfn.org",
   "applicationName": "some-proof-of-concept"
 }
 ```
