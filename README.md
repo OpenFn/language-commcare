@@ -29,7 +29,8 @@ Note that the username is your full email address.
   "appId": "the-long-uuid-in-the-url-that-designates-a-unique-commcare-project",
   "password": "shhh",
   "username": "test@openfn.org",
-  "applicationName": "some-proof-of-concept"
+  "applicationName": "some-proof-of-concept",
+  "hostUrl": "https://www.commcarehq.org"
 }
 ```
 
