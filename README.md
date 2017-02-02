@@ -27,7 +27,8 @@ enter it from the project screen. I.e., the last part of this url: `https://www.
   "appId": "the-long-uuid-in-the-url-that-designates-a-unique-commcare-project",
   "password": "shhh",
   "username": "openfn-test",
-  "applicationName": "some-proof-of-concept"
+  "applicationName": "some-proof-of-concept",
+  "hostUrl": "https://www.commcarehq.org"
 }
 ```
 

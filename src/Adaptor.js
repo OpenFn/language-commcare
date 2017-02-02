@@ -53,30 +53,33 @@ export function submit(formData) {
     const body = js2xmlparser("data", jsonBody);
 
     const {
+      // this should be called project URL.
+      // it is what lives after www.commcarehq.org/a/...
       applicationName,
       username,
       password,
-      appId
+      appId,
+      hostUrl
     } = state.configuration;
 
-    const url = `https://www.commcarehq.org/a/`.concat(applicationName, '/receiver/', appId, '/')
+    const url = (hostUrl || "https://www.commcarehq.org").concat('/a/', applicationName, '/receiver/', appId, '/');
 
     console.log("Posting to url: ".concat(url));
     console.log("Raw JSON body: ".concat(JSON.stringify(jsonBody)));
     console.log("X-form submission: ".concat(body));
 
     return clientPost({
-        url,
-        body,
-        username,
-        password
-      })
-      .then((result) => {
-        console.log("Success:", result);
-        return {...state,
-          references: [result, ...state.references]
-        }
-      })
+      url,
+      body,
+      username,
+      password
+    })
+    .then((result) => {
+      console.log("Success:", result);
+      return {...state,
+        references: [result, ...state.references]
+      }
+    });
 
   }
 }
