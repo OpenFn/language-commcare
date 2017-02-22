@@ -1,19 +1,9 @@
-import {
-  execute as commonExecute,
-  expandReferences
-} from 'language-common';
-import {
-  post as clientPost
-} from './Client';
-import {
-  resolve as resolveUrl
-} from 'url';
+import { execute as commonExecute, expandReferences } from 'language-common';
+import request from 'superagent';
+import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
 import Adaptor from 'language-http';
-const {
-  get,
-  post
-} = Adaptor;
+const { get, post } = Adaptor;
 
 /** @module Adaptor */
 
@@ -43,6 +33,23 @@ export function execute(...operations) {
     })
   };
 
+}
+
+function clientPost({ url, body, username, password }) {
+  return new Promise((resolve, reject) => {
+    request.post(url)
+    .auth(username, password)
+    .set('Content-Type', 'application/xml')
+    .send(body)
+    .end((error, res) => {
+      if (!!error || !res.ok) {
+        reject( error )
+      }
+
+      resolve( res )
+    })
+
+  })
 }
 
 export function submit(formData) {

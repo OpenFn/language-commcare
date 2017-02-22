@@ -1,5 +1,5 @@
 const fixtures = {
-  event: {
+  post: {
     requestBody: {
       "program": "eBAyeGv0exc",
       "orgUnit": "DiszpKrYNg8",
@@ -19,8 +19,6 @@ const fixtures = {
     responseBody: {
       "httpStatus":"OK",
       "httpStatusCode":200,"status":"OK","message":"Import was successful.","response":{"responseType":"ImportSummaries","imported":3,"updated":0,"deleted":0,"ignored":0,"importSummaries":[{"responseType":"ImportSummary","status":"SUCCESS","importCount":{"imported":3,"updated":0,"ignored":0,"deleted":0},"reference":"rrPOYH80oqG","href":"https://play.commcare.org/demo/api/events/rrPOYH80oqG"}]}}
-
-
   }
 }
 

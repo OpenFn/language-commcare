@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 
 import Adaptor from '../src';
-const { execute, event } = Adaptor;
+const { execute, submit } = Adaptor;
 
 import request from 'superagent';
 import superagentMock from 'superagent-mock';
-import ClientFixtures, { fixtures } from './ClientFixtures'
+import { fixtures } from './Fixtures'
 
 describe("execute", () => {
 
@@ -22,7 +22,6 @@ describe("execute", () => {
       expect(finalState).to.eql({ counter: 3 })
     })
     .then(done).catch(done)
-
 
   })
 
@@ -42,14 +41,14 @@ describe("execute", () => {
   })
 })
 
-describe("event", () => {
+describe("submit", () => {
   let mockRequest
 
   before(() => {
     mockRequest = superagentMock(request, ClientFixtures)
   })
 
-  it("posts to API and returns state", () => {
+  it("submits a form and returns state", () => {
     let state = {
       configuration: {
         username: "hello",
@@ -59,14 +58,14 @@ describe("event", () => {
     };
 
     return execute(
-      event(fixtures.event.requestBody)
+      submit(fixtures.submit.requestBody)
     )(state)
     .then((state) => {
       let lastReference = state.references[0]
 
-      // Check that the eventData made it's way to the request as a string.
+      // Check that the submission data made it's way to the request as a string.
       expect(lastReference.params).
-        to.eql(JSON.stringify(fixtures.event.requestBody))
+        to.eql(JSON.stringify(fixtures.submit.requestBody))
 
     })
 

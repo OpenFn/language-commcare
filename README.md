@@ -1,4 +1,4 @@
-Language CommCare
+Language CommCare [![Build Status](https://travis-ci.org/OpenFn/language-commcare.svg?branch=master)](https://travis-ci.org/OpenFn/language-commcare)
 =================
 
 Language Pack for interacting with the CommCare API.
