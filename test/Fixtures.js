@@ -1,5 +1,5 @@
 const fixtures = {
-  post: {
+  submit: {
     requestBody: {
       "program": "eBAyeGv0exc",
       "orgUnit": "DiszpKrYNg8",

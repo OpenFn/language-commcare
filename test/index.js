@@ -5,12 +5,15 @@ const { execute, submit } = Adaptor;
 
 import request from 'superagent';
 import superagentMock from 'superagent-mock';
-import { fixtures } from './Fixtures'
+import Fixtures, { fixtures } from './Fixtures'
 
 describe("execute", () => {
 
   it("executes each operation in sequence", (done) => {
-    let state = {}
+    let state = {
+      data: {},
+      configuration: {}
+    }
     let operations = [
       (state) => { return {counter: 1} },
       (state) => { return {counter: 2} },
@@ -26,7 +29,10 @@ describe("execute", () => {
   })
 
   it("assigns references, data to the initialState", () => {
-    let state = {}
+    let state = {
+      data: {},
+      configuration: {}
+    }
 
     let finalState = execute()(state)
 
@@ -45,31 +51,10 @@ describe("submit", () => {
   let mockRequest
 
   before(() => {
-    mockRequest = superagentMock(request, ClientFixtures)
+    mockRequest = superagentMock(request, Fixtures)
   })
 
-  it("submits a form and returns state", () => {
-    let state = {
-      configuration: {
-        username: "hello",
-        password: "there",
-        apiUrl: 'https://play.commcare.org/demo'
-      }
-    };
-
-    return execute(
-      submit(fixtures.submit.requestBody)
-    )(state)
-    .then((state) => {
-      let lastReference = state.references[0]
-
-      // Check that the submission data made it's way to the request as a string.
-      expect(lastReference.params).
-        to.eql(JSON.stringify(fixtures.submit.requestBody))
-
-    })
-
-  })
+  it("submits a form and returns state")
 
   after(() => {
     mockRequest.unset()
