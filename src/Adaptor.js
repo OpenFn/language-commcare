@@ -43,10 +43,9 @@ function clientPost({ url, body, username, password }) {
     .send(body)
     .end((error, res) => {
       if (!!error || !res.ok) {
-        reject( error )
+        reject(error)
       }
-
-      resolve( res )
+      resolve(res)
     })
 
   })
@@ -81,10 +80,11 @@ export function submit(formData) {
       username,
       password
     })
-    .then((result) => {
-      console.log("Success:", result);
+    .then((response) => {
+      console.log(`Server repsonded with a ${response.status}:`);
+      console.log(repsonse);
       return {...state,
-        references: [result, ...state.references]
+        references: [response, ...state.references]
       }
     });
 
