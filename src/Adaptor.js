@@ -1,11 +1,10 @@
+/** @module Adaptor */
+
 import { execute as commonExecute, expandReferences } from 'language-common';
 import request from 'superagent';
 import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
 import Adaptor from 'language-http';
-const { get, post } = Adaptor;
-
-/** @module Adaptor */
 
 /**
  * Execute a sequence of operations.
@@ -15,7 +14,7 @@ const { get, post } = Adaptor;
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -35,6 +34,14 @@ export function execute(...operations) {
 
 }
 
+/**
+ * Performs a post request
+ * @example
+ *  clientPost(formData)
+ * @function
+ * @param {Object} _ref - referencse
+ * @returns {State}
+ */
 function clientPost({ url, body, username, password }) {
   return new Promise((resolve, reject) => {
     request.post(url)
@@ -51,6 +58,15 @@ function clientPost({ url, body, username, password }) {
   })
 }
 
+/**
+ * Submit form data
+ * @public
+ * @example
+ *  submit(formData)
+ * @function
+ * @param {Object} formData - Object including form data.
+ * @returns {Operation}
+ */
 export function submit(formData) {
 
   return state => {
@@ -82,7 +98,7 @@ export function submit(formData) {
     })
     .then((response) => {
       console.log(`Server repsonded with a ${response.status}:`);
-      console.log(repsonse);
+      console.log(response);
       return {...state,
         references: [response, ...state.references]
       }
@@ -94,10 +110,9 @@ export function submit(formData) {
 /**
  * Make a GET request to CommCare's Reports Api
  * and POST the response it somewhere else
+ * @public
  * @example
- * execute(
- *   fetchReportData(reportId, params, postUrl)
- * )(state)
+ *  fetchReportData(reportId, params, postUrl)
  * @constructor
  * @param {String} reportId - API name of the report.
  * @param {Object} params - Query params, incl: limit, offset, and custom report filters.
@@ -105,6 +120,8 @@ export function submit(formData) {
  * @returns {Operation}
  */
 export function fetchReportData(reportId, params, postUrl) {
+
+  const { get, post } = Adaptor;
 
   return get(`api/v0.5/configurablereportdata/${ reportId }/`, {
     query: function(state) {
