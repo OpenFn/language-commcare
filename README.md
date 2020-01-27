@@ -34,7 +34,7 @@ Note that the username is your full email address.
 }
 ```
 
-## `fetchReportData` to pull aggregate data from CommCare with a timed job run
+## `fetchReportData` to pull aggregate data from CommCare
 
 It takes 3 arguments: reportId, params, and postUrl.
 
