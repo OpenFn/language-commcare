@@ -1,5 +1,4 @@
-Language CommCare [![Build Status](https://travis-ci.org/OpenFn/language-commcare.svg?branch=master)](https://travis-ci.org/OpenFn/language-commcare)
-=================
+# Language CommCare [![Build Status](https://travis-ci.org/OpenFn/language-commcare.svg?branch=master)](https://travis-ci.org/OpenFn/language-commcare)
 
 Language Pack for interacting with the CommCare API.
 
@@ -9,18 +8,18 @@ https://confluence.dimagi.com/display/commcarepublic/Submission+API
 
 https://bitbucket.org/javarosa/javarosa/wiki/FormSubmissionAPI
 
-Accepted X-Form Spec from Dimagi: http://dimagi.github.io/xform-spec
-Accepted X-Form Spec for Cases from Dimagi: https://github.com/dimagi/commcare/wiki/casexml20
+Accepted X-Form Spec from Dimagi: http://dimagi.github.io/xform-spec Accepted
+X-Form Spec for Cases from Dimagi:
+https://github.com/dimagi/commcare/wiki/casexml20
 
-
-Documentation
--------------
+## Documentation
 
 ## configuration
 
 The "appId" is the UUID which designates your commcare project as different from
 everyone elses. It can be found in the URL of your application when you first
-enter it from the project screen. I.e., the last part of this url: `https://www.commcarehq.org/a/YOUR_PROJECT/apps/view/YOUR_APP_ID/`
+enter it from the project screen. I.e., the last part of this url:
+`https://www.commcarehq.org/a/YOUR_PROJECT/apps/view/YOUR_APP_ID/`
 
 Note that the username is your full email address.
 
@@ -40,13 +39,14 @@ It takes 3 arguments: reportId, params, and postUrl.
 
 ```js
 fetchReportData(
-  "reportId",
-  { "limit": 10, "offset": 2, "state": "Vermont" },
-  "http://www.openfn.org/inbox/secret-uuid"
-)
+  'reportId',
+  { limit: 10, offset: 2, state: 'Vermont' },
+  'http://www.openfn.org/inbox/secret-uuid'
+);
 ```
 
 simple body target:
+
 ```xml
 <data xmlns="http://openrosa.org/formdesigner/39A2CA97-2EB8-4A9C-A0D1-6AA666666A66">
     <firstname>Something</firstname>
@@ -56,6 +56,7 @@ simple body target:
 ```
 
 complex body target:
+
 ```xml
 <?xml version='1.0' ?>
 <data uiVersion="1" version="17" name="New Form" xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/1DFD8610-91E3-4409-BF8B-02D3B4FF3530">
@@ -82,26 +83,31 @@ complex body target:
 ## Submitting data to CommCare HQ
 
 ### submit
-Here we're just building the most basic JSON object, that will be converted to an XML object and posted as the <data /> element.
+
+Here we're just building the most basic JSON object, that will be converted to
+an XML object and posted as the <data /> element.
+
 ```js
 submit(
   fields(
-    field("@", function(state) {
+    field('@', function (state) {
       return {
-        "xmlns": "http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9"
+        xmlns:
+          'http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9',
       };
     }),
-    field("paitent_namentosh", dataValue("first_name")),
-    field("question2", "Some answer here."),
-    field("question3", "HKS"),
-    field("question4", "item1"),
-    field("question5", 69855),
-    field("question6", 12)
+    field('paitent_namentosh', dataValue('first_name')),
+    field('question2', 'Some answer here.'),
+    field('question3', 'HKS'),
+    field('question4', 'item1'),
+    field('question5', 69855),
+    field('question6', 12)
   )
-)
+);
 ```
 
 An open rosa form submission body should look like this:
+
 ```xml
 <?xml version="1.0" ?>
 <data name="Patient Registration" uiVersion="1" version="9" xmlns="http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9" xmlns:jrm="http://dev.commcarehq.org/jr/xforms">
@@ -124,6 +130,7 @@ An open rosa form submission body should look like this:
 ```
 
 So the JSON emitted by your expression should look like this:
+
 ```json
 {
   "data": {
@@ -155,12 +162,12 @@ So the JSON emitted by your expression should look like this:
 }
 ```
 
-
-Development
------------
+## Development
 
 Clone the repo, run `npm install`.
 
 Run tests using `npm run test` or `npm run test:watch`
 
 Build the project using `make`.
+
+To build the docs for this repo, run `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`.
