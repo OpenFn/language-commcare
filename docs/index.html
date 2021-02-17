@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Language CommCare <a href="https://travis-ci.org/OpenFn/language-commcare"><img src="https://travis-ci.org/OpenFn/language-commcare.svg?branch=master" alt="Build Status"></a></h1>
+<p>Language Pack for interacting with the CommCare API.</p>
+<p>https://confluence.dimagi.com/display/commcarepublic/Download+Report+Data</p>
+<p>https://confluence.dimagi.com/display/commcarepublic/Submission+API</p>
+<p>https://bitbucket.org/javarosa/javarosa/wiki/FormSubmissionAPI</p>
+<p>Accepted X-Form Spec from Dimagi: http://dimagi.github.io/xform-spec Accepted
+X-Form Spec for Cases from Dimagi:
+https://github.com/dimagi/commcare/wiki/casexml20</p>
+<h2>Documentation</h2>
+<h2>configuration</h2>
+<p>The &quot;appId&quot; is the UUID which designates your commcare project as different from
+everyone elses. It can be found in the URL of your application when you first
+enter it from the project screen. I.e., the last part of this url:
+<code>https://www.commcarehq.org/a/YOUR_PROJECT/apps/view/YOUR_APP_ID/</code></p>
+<p>Note that the username is your full email address.</p>
+<pre class="prettyprint source lang-json"><code>{
+  &quot;appId&quot;: &quot;the-long-uuid-in-the-url-that-designates-a-unique-commcare-project&quot;,
+  &quot;password&quot;: &quot;shhh&quot;,
+  &quot;username&quot;: &quot;test@openfn.org&quot;,
+  &quot;applicationName&quot;: &quot;some-proof-of-concept&quot;,
+  &quot;hostUrl&quot;: &quot;https://www.commcarehq.org&quot;
+}
+</code></pre>
+<h2><code>fetchReportData</code> to pull aggregate data from CommCare</h2>
+<p>It takes 3 arguments: reportId, params, and postUrl.</p>
+<pre class="prettyprint source lang-js"><code>fetchReportData(
+  'reportId',
+  { limit: 10, offset: 2, state: 'Vermont' },
+  'http://www.openfn.org/inbox/secret-uuid'
+);
+</code></pre>
+<p>simple body target:</p>
+<pre class="prettyprint source lang-xml"><code>&lt;data xmlns=&quot;http://openrosa.org/formdesigner/39A2CA97-2EB8-4A9C-A0D1-6AA666666A66&quot;>
+    &lt;firstname>Something&lt;/firstname>
+    &lt;lastname>Else&lt;/lastname>
+    &lt;age>29&lt;/age>
+&lt;/data>
+</code></pre>
+<p>complex body target:</p>
+<pre class="prettyprint source lang-xml"><code>&lt;?xml version='1.0' ?>
+&lt;data uiVersion=&quot;1&quot; version=&quot;17&quot; name=&quot;New Form&quot; xmlns:jrm=&quot;http://dev.commcarehq.org/jr/xforms&quot; xmlns=&quot;http://openrosa.org/formdesigner/1DFD8610-91E3-4409-BF8B-02D3B4FF3530&quot;>
+    &lt;foo>bar&lt;/foo>
+    &lt;n0:case case_id=&quot;ddb8e2b3-7ce0-43e4-ad45-d7a2eebe9169&quot; user_id=&quot;user-xxx-eve&quot; date_modified=&quot;2013-04-19T16:53:02.799-04&quot; xmlns:n0=&quot;http://commcarehq.org/case/transaction/v2&quot;>
+        &lt;n0:create>
+            &lt;n0:case_name>bar&lt;/n0:case_name>
+            &lt;n0:owner_id>user-xxx-eve&lt;/n0:owner_id>
+            &lt;n0:case_type>member&lt;/n0:case_type>
+        &lt;/n0:create>
+    &lt;/n0:case>
+    &lt;n1:meta xmlns:n1=&quot;http://openrosa.org/jr/xforms&quot;>
+        &lt;n1:deviceID>A00000245706EE&lt;/n1:deviceID>
+        &lt;n1:timeStart>2013-04-19T16:52:41.000-04&lt;/n1:timeStart>
+        &lt;n1:timeEnd>2013-04-19T16:53:02.799-04&lt;/n1:timeEnd>
+        &lt;n1:username>eve&lt;/n1:username>
+        &lt;n1:userID>user-xxx-eve&lt;/n1:userID>
+        &lt;n1:instanceID>b58df19c-efd5-4ecf-9581-65dda8b8787c&lt;/n1:instanceID>
+        &lt;n2:appVersion xmlns:n2=&quot;http://commcarehq.org/xforms&quot;>CommCare ODK, version &quot;2.4.1&quot;(10083). App v19. CommCare Version 2.4. Build 10083, built on: March-12-2013&lt;/n2:appVersion>
+    &lt;/n1:meta>
+&lt;/data>
+</code></pre>
+<h2>Submitting data to CommCare HQ</h2>
+<h3>submit</h3>
+<p>Here we're just building the most basic JSON object, that will be converted to
+an XML object and posted as the <data /> element.</p>
+<pre class="prettyprint source lang-js"><code>submit(
+  fields(
+    field('@', function (state) {
+      return {
+        xmlns:
+          'http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9',
+      };
+    }),
+    field('paitent_namentosh', dataValue('first_name')),
+    field('question2', 'Some answer here.'),
+    field('question3', 'HKS'),
+    field('question4', 'item1'),
+    field('question5', 69855),
+    field('question6', 12)
+  )
+);
+</code></pre>
+<p>An open rosa form submission body should look like this:</p>
+<pre class="prettyprint source lang-xml"><code>&lt;?xml version=&quot;1.0&quot; ?>
+&lt;data name=&quot;Patient Registration&quot; uiVersion=&quot;1&quot; version=&quot;9&quot; xmlns=&quot;http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9&quot; xmlns:jrm=&quot;http://dev.commcarehq.org/jr/xforms&quot;>
+  &lt;paitent_namentosh>Taylor&lt;/paitent_namentosh>
+  &lt;question2>Moruki&lt;/question2>
+  &lt;question3>Hks&lt;/question3>
+  &lt;question4>item1&lt;/question4>
+  &lt;question5>69855&lt;/question5>
+  &lt;question6>12&lt;/question6>
+  &lt;n0:meta xmlns:n0=&quot;http://openrosa.org/jr/xforms&quot;>
+    &lt;n0:deviceID>358239055789384&lt;/n0:deviceID>
+    &lt;n0:timeStart>2015-08-21T16:21:59.807+02&lt;/n0:timeStart>
+    &lt;n0:timeEnd>2015-08-21T16:22:15.987+02&lt;/n0:timeEnd>
+    &lt;n0:username>openfn&lt;/n0:username>
+    &lt;n0:userID>5fe615b3af2834cb5dca59f7466d6174&lt;/n0:userID>
+    &lt;n0:instanceID>195e79eb-d823-46fe-9e4f-59b8327d5db2&lt;/n0:instanceID>
+    &lt;n1:appVersion xmlns:n1=&quot;http://commcarehq.org/xforms&quot;>CommCare ODK, version &quot;2.22.0&quot;(370023). App v9. CommCare Version 2.22. Build 370023, built on: July-22-2015&lt;/n1:appVersion>
+  &lt;/n0:meta>
+&lt;/data>
+</code></pre>
+<p>So the JSON emitted by your expression should look like this:</p>
+<pre class="prettyprint source lang-json"><code>{
+  &quot;data&quot;: {
+    &quot;name&quot;: &quot;Patient Registration&quot;,
+    &quot;uiVersion&quot;: &quot;1&quot;,
+    &quot;version&quot;: &quot;9&quot;,
+    &quot;xmlns&quot;: &quot;http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9&quot;,
+    &quot;xmlns:jrm&quot;: &quot;http://dev.commcarehq.org/jr/xforms&quot;,
+    &quot;paitent_namentosh&quot;: &quot;Taylor&quot;,
+    &quot;question2&quot;: &quot; Moruki&quot;,
+    &quot;question3&quot;: &quot;Hks&quot;,
+    &quot;question4&quot;: &quot;item1&quot;,
+    &quot;question5&quot;: &quot;69855&quot;,
+    &quot;question6&quot;: &quot;12&quot;,
+    &quot;n0:meta&quot;: {
+      &quot;xmlns:n0&quot;: &quot;http://openrosa.org/jr/xforms&quot;,
+      &quot;n0:deviceID&quot;: &quot;358239055789384&quot;,
+      &quot;n0:timeStart&quot;: &quot;2015-08-21T16:21:59.807+02&quot;,
+      &quot;n0:timeEnd&quot;: &quot;2015-08-21T16:22:15.987+02&quot;,
+      &quot;n0:username&quot;: &quot;openfn&quot;,
+      &quot;n0:userID&quot;: &quot;5fe615b3af2834cb5dca59f7466d6174&quot;,
+      &quot;n0:instanceID&quot;: &quot;195e79eb-d823-46fe-9e4f-59b8327d5db2&quot;,
+      &quot;n1:appVersion&quot;: {
+        &quot;xmlns:n1&quot;: &quot;http://commcarehq.org/xforms&quot;,
+        &quot;$t&quot;: &quot;CommCare ODK, version \&quot;2.22.0\&quot;(370023). App v9. CommCare Version 2.22. Build 370023, built on: July-22-2015&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<h2>Development</h2>
+<p>Clone the repo, run <code>npm install</code>.</p>
+<p>Run tests using <code>npm run test</code> or <code>npm run test:watch</code></p>
+<p>Build the project using <code>make</code>.</p>
+<p>To build the docs for this repo, run <code>./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs</code>.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Adaptor.html">Adaptor</a></li></ul><h3>Classes</h3><ul><li><a href="module-Adaptor-fetchReportData.html">fetchReportData</a></li><li><a href="module-Adaptor-submit.html">submit</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Feb 17 2021 23:03:17 GMT+0000 (Greenwich Mean Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
