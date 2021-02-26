@@ -2,12 +2,18 @@
 
 import {
   execute as commonExecute,
+  http,
   expandReferences,
 } from '@openfn/language-common';
 import request from 'superagent';
+// import request from 'request';
+import FormData from 'form-data';
+import axios from 'axios';
 import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
 import Adaptor from 'language-http';
+import xlsx from 'xlsx';
+import fs from 'fs';
 
 /**
  * Execute a sequence of operations.
@@ -58,6 +64,156 @@ function clientPost({ url, body, username, password }) {
         resolve(res);
       });
   });
+}
+
+/**
+ * Convert form data to xls then submit.
+ * @public
+ * @example
+ * submitXls([name, phone],
+ *    [
+ *      {name: 'Mamadou', phone: '000000'},
+ *    ]
+ * )
+ * @constructor
+ * @param {Object} keys - Array of headers.
+ * @param {Object} formData - Object including form data.
+ * @returns {Operation}
+ */
+export function submitXls(keys, formData) {
+  return state => {
+    let wb = xlsx.utils.book_new();
+    let ws = xlsx.utils.json_to_sheet(formData);
+    var ws_name = 'SheetJS';
+    xlsx.utils.book_append_sheet(wb, ws, ws_name);
+
+    // generate buffer
+    var buf = xlsx.write(wb, { type: 'buffer', bookType: 'biff5' });
+    // xlsx.writeFile(wb, 'out.xls');
+    console.log(buf);
+
+    const {
+      applicationName,
+      hostUrl,
+      username,
+      password,
+    } = state.configuration;
+
+    const url = (hostUrl || 'https://www.commcarehq.org:443').concat(
+      '/a/',
+      applicationName,
+      '/importer/excel/bulk_upload_api/'
+    );
+
+    let data = new FormData();
+    var CRLF = '\r\n';
+    var options = {
+      header:
+        CRLF +
+        '--' +
+        data.getBoundary() +
+        CRLF +
+        'X-Custom-Header: 123' +
+        CRLF +
+        CRLF,
+      knownLength: 1,
+    };
+
+    data.append('file', buf, options);
+    // data.append('file', fs.createReadStream('./out.xls'));
+    data.append('case_type', 'student');
+    data.append('search_field', 'external_id');
+    data.append('create_new_cases', 'on');
+
+    console.log('Posting to url: '.concat(url));
+    // https://requestbin.com/r/en84a5jxju98o/1oyrsf7BKC9rOeoxWNTVlqmUVH1 --> look here at the headers.
+
+    // console.log(form);
+    return http
+      .post({
+        url,
+        // 'https://www.commcarehq.org:443/a/empleando-futuros-pilot/importer/excel/bulk_upload_api/',
+        // url: 'https://en84a5jxju98o.x.pipedream.net/from-adaptor',
+        data: data,
+        // auth: { username, password },
+        headers: {
+          Authorization: 'Basic YWxla3NhQG9wZW5mbi5vcmc6ZGF0YUAyMDE5',
+          ...data.getHeaders(),
+        },
+      })(state)
+      .then(res => {
+        console.log('success', res);
+      })
+      .catch(err => {
+        console.log('there is an error', err);
+      });
+    /*  const headers = form.getHeaders();
+    console.log('headers', headers);
+
+    const formData = {
+      // Pass data via Buffers
+      file: buf,
+      case_type: 'student',
+      search_field: 'external_id',
+      create_new_cases: 'on',
+    }; */
+
+    // https://www.npmjs.com/package/request#multipartform-data-multipart-form-uploads
+
+    // return new Promise((resolve, reject) => {
+    //   console.log('Posting to url: '.concat(url));
+    //   request.post(
+    //     {
+    //       url: 'https://www.commcarehq.org:443/a/empleando-futuros-pilot/importer/excel/bulk_upload_api/',
+    //       method: "POST",
+    //       formData: formData,
+    //       auth: {
+    //         'user': username,
+    //         'pass': password,
+    //       },
+    //       // followAllRedirects: true
+    //     },
+    //     function optionalCallback(err, httpResponse, body) {
+    //       if (err) {
+    //         reject(err);
+    //       }
+    //       // console.log(httpResponse);
+    //       console.log('Upload successful!  Server responded with code:', httpResponse.statusCode);
+    //       console.log('Upload successful!  Server responded with method:', httpResponse.request.method);
+    //       console.log('Upload successful!  Server responded with href:', httpResponse.request.href);
+    //       console.log('Upload successful!  Server responded with:', body);
+    //       resolve(state);
+    //     }
+    //   );
+    // })
+
+    // form.pipe(request)
+
+    // return request.on('response', function(res) {
+    //   console.log(res);
+    // });
+
+    /*  return axios
+      .post(
+        url,
+        { form },
+        {
+          headers: {
+            ...form.getHeaders(),
+            authorization: 'Basic YWxla3NhQG9wZW5mbi5vcmc6ZGF0YUAyMDE5',
+          },
+        }
+      )
+      .then(res => {
+        console.log(`success`);
+        return res;
+      })
+      .catch(err => {
+        console.log('error', err);
+        console.log('bad headers', err.config.headers);
+        throw 'oops';
+      }); */
+  };
 }
 
 /**
@@ -160,6 +316,9 @@ export function fetchReportData(reportId, params, postUrl) {
 }
 
 export {
+  alterState,
+  arrayToString,
+  combine,
   dataPath,
   dataValue,
   each,
