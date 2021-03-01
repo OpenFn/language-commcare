@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: fetchReportData</title>
+    <title>JSDoc: Class: submitXls</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: fetchReportData</h1>
+    <h1 class="page-title">Class: submitXls</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-Adaptor.html">Adaptor</a>~</span>fetchReportData<span class="signature">(reportId, params, postUrl)</span><span class="type-signature"> &rarr; {Operation}</span></h2>
+            <span class="ancestors"><a href="module-Adaptor.html">Adaptor</a>~</span>submitXls<span class="signature">(formData, params)</span><span class="type-signature"> &rarr; {Operation}</span></h2>
         
     
 </header>
@@ -42,7 +42,7 @@
     
 
     
-    <h4 class="name" id="fetchReportData"><span class="type-signature"></span>new fetchReportData<span class="signature">(reportId, params, postUrl)</span><span class="type-signature"> &rarr; {Operation}</span></h4>
+    <h4 class="name" id="submitXls"><span class="type-signature"></span>new submitXls<span class="signature">(formData, params)</span><span class="type-signature"> &rarr; {Operation}</span></h4>
     
 
     
@@ -50,8 +50,7 @@
 
 
 <div class="description">
-    Make a GET request to CommCare's Reports Api
-and POST the response to somewhere else.
+    Convert form data to xls then submit.
 </div>
 
 
@@ -87,13 +86,13 @@ and POST the response to somewhere else.
 
         <tr>
             
-                <td class="name"><code>reportId</code></td>
+                <td class="name"><code>formData</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Object</span>
 
 
             
@@ -103,7 +102,7 @@ and POST the response to somewhere else.
 
             
 
-            <td class="description last">API name of the report.</td>
+            <td class="description last">Object including form data.</td>
         </tr>
 
     
@@ -126,30 +125,7 @@ and POST the response to somewhere else.
 
             
 
-            <td class="description last">Query params, incl: limit, offset, and custom report filters.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>postUrl</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Url to which the response object will be posted.</td>
+            <td class="description last">Request params including case type and external id.</td>
         </tr>
 
     
@@ -190,7 +166,7 @@ and POST the response to somewhere else.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Adaptor.js.html">Adaptor.js</a>, <a href="Adaptor.js.html#line298">line 298</a>
+        <a href="Adaptor.js.html">Adaptor.js</a>, <a href="Adaptor.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -239,7 +215,16 @@ and POST the response to somewhere else.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>fetchReportData(reportId, params, postUrl)</code></pre>
+    <pre class="prettyprint"><code>submitXls(
+   [
+     {name: 'Mamadou', phone: '000000'},
+   ],
+   {
+     case_type: 'student',
+     search_field: 'external_id',
+     create_new_cases: 'on',
+   }
+)</code></pre>
 
 
 
