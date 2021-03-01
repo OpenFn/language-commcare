@@ -2,12 +2,15 @@
 
 import {
   execute as commonExecute,
+  http,
   expandReferences,
 } from '@openfn/language-common';
 import request from 'superagent';
+import FormData from 'form-data';
 import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
 import Adaptor from 'language-http';
+import xlsx from 'xlsx';
 
 /**
  * Execute a sequence of operations.
@@ -58,6 +61,77 @@ function clientPost({ url, body, username, password }) {
         resolve(res);
       });
   });
+}
+
+/**
+ * Convert form data to xls then submit.
+ * @public
+ * @example
+ * submitXls(
+ *    [
+ *      {name: 'Mamadou', phone: '000000'},
+ *    ],
+ *    {
+ *      case_type: 'student',
+ *      search_field: 'external_id',
+ *      create_new_cases: 'on',
+ *    }
+ * )
+ * @constructor
+ * @param {Object} formData - Object including form data.
+ * @param {Object} params - Request params including case type and external id.
+ * @returns {Operation}
+ */
+export function submitXls(formData, params) {
+  return state => {
+    const {
+      applicationName,
+      hostUrl,
+      username,
+      password,
+    } = state.configuration;
+    const { case_type, search_field, create_new_cases } = params;
+
+    const url = (hostUrl || 'https://www.commcarehq.org').concat(
+      '/a/',
+      applicationName,
+      '/importer/excel/bulk_upload_api/'
+    );
+
+    const workbook = xlsx.utils.book_new();
+    const worksheet = xlsx.utils.json_to_sheet(formData);
+    const ws_name = 'SheetJS';
+    xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
+
+    // Generate buffer
+    const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'biff5' });
+    // xlsx.writeFile(workbook, 'out.xls'); // If needing to write to filesystem
+
+    const data = new FormData();
+
+    data.append('file', buffer, { filename: 'output.xls' });
+    // data.append('file', fs.createReadStream('./out.xls'));
+    data.append('case_type', case_type);
+    data.append('search_field', search_field);
+    data.append('create_new_cases', create_new_cases);
+
+    console.log('Posting to url: '.concat(url));
+    return http
+      .post({
+        url,
+        data,
+        auth: { username, password },
+        headers: {
+          ...data.getHeaders(),
+        },
+      })(state)
+      .then(response => {
+        return { ...state, data: { body: response.data } };
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
 }
 
 /**
@@ -160,6 +234,9 @@ export function fetchReportData(reportId, params, postUrl) {
 }
 
 export {
+  alterState,
+  arrayToString,
+  combine,
   dataPath,
   dataValue,
   each,
