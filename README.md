@@ -82,6 +82,17 @@ complex body target:
 
 ## Submitting data to CommCare HQ
 
+### Submit an XLS file
+This function bulk submit a JSON object as xls file to CommCare HQ
+
+```js
+submitXls([{ name: 'Mamadou', phone: '000000' }], {
+  case_type: 'student',
+  search_field: 'external_id',
+  create_new_cases: 'on',
+});
+```
+
 ### submit
 
 Here we're just building the most basic JSON object, that will be converted to
@@ -170,4 +181,5 @@ Run tests using `npm run test` or `npm run test:watch`
 
 Build the project using `make`.
 
-To build the docs for this repo, run `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`.
+To build the docs for this repo, run
+`./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`.
