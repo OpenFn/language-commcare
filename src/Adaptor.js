@@ -104,7 +104,7 @@ export function submitXls(formData, params) {
     xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
 
     // Generate buffer
-    const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'biff5' });
+    const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' });
     // xlsx.writeFile(workbook, 'out.xls'); // If needing to write to filesystem
 
     const data = new FormData();
