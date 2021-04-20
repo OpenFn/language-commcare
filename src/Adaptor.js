@@ -129,7 +129,7 @@ export function submitXls(formData, params) {
         return { ...state, data: { body: response.data } };
       })
       .catch(err => {
-        throw err;
+        throw { ...err, config: {}, request: {} };
       });
   };
 }
