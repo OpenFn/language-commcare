@@ -11,12 +11,14 @@
   "scripts": {
     "build": "make",
     "test": "mocha --require @babel/register",
-    "test:watch": "mocha -w --require @babel/register"
+    "test:watch": "mocha -w --require @babel/register",
+    "prepack": "npx @openfn/simple-ast --adaptor ./lib/Adaptor.js --output ast.json"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
   "files": [
-    "lib/"
+    "lib/",
+    "ast.json"
   ],
   "dependencies": {
     "@openfn/language-common": "1.2.6",
@@ -41,5 +43,18 @@
     "sinon": "^9.2.3",
     "assertion-error": "^1.0.1",
     "superagent-mock": "^1.10.0"
-  }
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "bundledDependencies": [
+    "@openfn/language-common",
+    "JSONPath",
+    "form-data",
+    "js2xmlparser",
+    "language-http",
+    "lodash-fp",
+    "superagent",
+    "xlsx"
+  ]
 }
