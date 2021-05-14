@@ -22,9 +22,9 @@
   ],
   "dependencies": {
     "@openfn/language-common": "1.2.6",
-    "JSONPath": "^0.10.0",
     "form-data": "^4.0.0",
     "js2xmlparser": "^1.0.0",
+    "JSONPath": "^0.10.0",
     "language-http": "github:openfn/language-http#v0.4.0",
     "lodash-fp": "^0.10.2",
     "superagent": "^6.1.0",
@@ -35,13 +35,13 @@
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@babel/register": "^7.9.0",
+    "assertion-error": "^1.0.1",
     "chai": "^4.2.0",
-    "jsdoc": "^3.6.6",
     "deep-eql": "^4.0.0",
+    "jsdoc": "^3.6.6",
     "mocha": "^7.1.0",
     "nock": "^13.0.5",
     "sinon": "^9.2.3",
-    "assertion-error": "^1.0.1",
     "superagent-mock": "^1.10.0"
   },
   "directories": {
