@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: submit</title>
+    <title>JSDoc: Class: clientPost</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: submit</h1>
+    <h1 class="page-title">Class: clientPost</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-Adaptor.html">Adaptor</a>~</span>submit<span class="signature">(formData)</span><span class="type-signature"> &rarr; {Operation}</span></h2>
+            <span class="ancestors"><a href="module-Adaptor.html">Adaptor</a>~</span>clientPost<span class="signature">(formData)</span><span class="type-signature"> &rarr; {State}</span></h2>
         
     
 </header>
@@ -42,7 +42,7 @@
     
 
     
-    <h4 class="name" id="submit"><span class="type-signature"></span>new submit<span class="signature">(formData)</span><span class="type-signature"> &rarr; {Operation}</span></h4>
+    <h4 class="name" id="clientPost"><span class="type-signature"></span>new clientPost<span class="signature">(formData)</span><span class="type-signature"> &rarr; {State}</span></h4>
     
 
     
@@ -50,7 +50,7 @@
 
 
 <div class="description">
-    Submit form data
+    Performs a post request
 </div>
 
 
@@ -102,7 +102,7 @@
 
             
 
-            <td class="description last">Object including form data.</td>
+            <td class="description last">Form Data with auth params and body</td>
         </tr>
 
     
@@ -143,7 +143,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Adaptor.js.html">Adaptor.js</a>, <a href="Adaptor.js.html#line254">line 254</a>
+        <a href="Adaptor.js.html">Adaptor.js</a>, <a href="Adaptor.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
@@ -179,7 +179,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Operation</span>
+<span class="param-type">State</span>
 
 
     </dd>
@@ -192,17 +192,7 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>submit(
-   fields(
-     field("@", function(state) {
-       return {
-         "xmlns": "http://openrosa.org/formdesigner/form-id-here"
-       };
-     }),
-     field("question1", dataValue("answer1")),
-     field("question2", "Some answer here.")
-   )
- )</code></pre>
+    <pre class="prettyprint"><code>clientPost(formData)</code></pre>
 
 
 

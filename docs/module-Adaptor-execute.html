@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: submit</title>
+    <title>JSDoc: Class: execute</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: submit</h1>
+    <h1 class="page-title">Class: execute</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-Adaptor.html">Adaptor</a>~</span>submit<span class="signature">(formData)</span><span class="type-signature"> &rarr; {Operation}</span></h2>
+            <span class="ancestors"><a href="module-Adaptor.html">Adaptor</a>~</span>execute<span class="signature">(&hellip;operations)</span><span class="type-signature"> &rarr; {Operation}</span></h2>
         
     
 </header>
@@ -42,7 +42,7 @@
     
 
     
-    <h4 class="name" id="submit"><span class="type-signature"></span>new submit<span class="signature">(formData)</span><span class="type-signature"> &rarr; {Operation}</span></h4>
+    <h4 class="name" id="execute"><span class="type-signature"></span>new execute<span class="signature">(&hellip;operations)</span><span class="type-signature"> &rarr; {Operation}</span></h4>
     
 
     
@@ -50,7 +50,8 @@
 
 
 <div class="description">
-    Submit form data
+    Execute a sequence of operations.
+Wraps `language-common/execute`, and prepends initial state for commcare.
 </div>
 
 
@@ -74,6 +75,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -86,23 +89,33 @@
 
         <tr>
             
-                <td class="name"><code>formData</code></td>
+                <td class="name"><code>operations</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Operations</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
 
             
 
-            <td class="description last">Object including form data.</td>
+            <td class="description last">Operations to be performed.</td>
         </tr>
 
     
@@ -143,7 +156,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Adaptor.js.html">Adaptor.js</a>, <a href="Adaptor.js.html#line254">line 254</a>
+        <a href="Adaptor.js.html">Adaptor.js</a>, <a href="Adaptor.js.html#line111">line 111</a>
     </li></ul></dd>
     
 
@@ -192,17 +205,10 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>submit(
-   fields(
-     field("@", function(state) {
-       return {
-         "xmlns": "http://openrosa.org/formdesigner/form-id-here"
-       };
-     }),
-     field("question1", dataValue("answer1")),
-     field("question2", "Some answer here.")
-   )
- )</code></pre>
+    <pre class="prettyprint"><code>execute(
+  create('foo'),
+  delete('bar')
+)(state)</code></pre>
 
 
 
