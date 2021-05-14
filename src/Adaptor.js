@@ -7,7 +7,6 @@ import {
 } from '@openfn/language-common';
 import request from 'superagent';
 import FormData from 'form-data';
-import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
 import Adaptor from 'language-http';
 import xlsx from 'xlsx';
@@ -20,7 +19,7 @@ import xlsx from 'xlsx';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @function
+ * @constructor
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -43,7 +42,7 @@ export function execute(...operations) {
  * Performs a post request
  * @example
  *  clientPost(formData)
- * @function
+ * @constructor
  * @param {Object} formData - Form Data with auth params and body
  * @returns {State}
  */
@@ -194,11 +193,11 @@ export function submit(formData) {
 }
 
 /**
- * Make a GET request to CommCare's Reports Api
+ * Make a GET request to CommCare's Reports API
  * and POST the response to somewhere else.
  * @public
  * @example
- *  fetchReportData(reportId, params, postUrl)
+ * fetchReportData(reportId, params, postUrl)
  * @constructor
  * @param {String} reportId - API name of the report.
  * @param {Object} params - Query params, incl: limit, offset, and custom report filters.
