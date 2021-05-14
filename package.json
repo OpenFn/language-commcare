@@ -49,9 +49,9 @@
   },
   "bundledDependencies": [
     "@openfn/language-common",
-    "JSONPath",
     "form-data",
     "js2xmlparser",
+    "JSONPath",
     "language-http",
     "lodash-fp",
     "superagent",
