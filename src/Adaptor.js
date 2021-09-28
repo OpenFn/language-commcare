@@ -233,6 +233,7 @@ export function fetchReportData(reportId, params, postUrl) {
 }
 
 export {
+  fn,
   alterState,
   arrayToString,
   combine,
