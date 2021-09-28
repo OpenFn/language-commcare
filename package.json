@@ -9,10 +9,12 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "build": "make",
+    "ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
+    "build": "node_modules/.bin/babel src -d lib && npm run ast",
+    "postversion": "git push && git push --tags",
     "test": "mocha --require @babel/register",
     "test:watch": "mocha -w --require @babel/register",
-    "prepack": "npx @openfn/simple-ast --adaptor ./lib/Adaptor.js --output ast.json"
+    "version": "npm run build && git add -A lib ast.json"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -21,7 +23,7 @@
     "ast.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.4.1",
+    "@openfn/language-common": "1.4.2",
     "form-data": "^4.0.0",
     "js2xmlparser": "^1.0.0",
     "JSONPath": "^0.10.0",

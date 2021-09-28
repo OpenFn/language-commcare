@@ -89,6 +89,8 @@ export function submitXls(formData, params) {
       username,
       password,
     } = state.configuration;
+
+    const json = expandReferences(formData)(state);
     const { case_type, search_field, create_new_cases } = params;
 
     const url = (hostUrl || 'https://www.commcarehq.org').concat(
@@ -98,7 +100,7 @@ export function submitXls(formData, params) {
     );
 
     const workbook = xlsx.utils.book_new();
-    const worksheet = xlsx.utils.json_to_sheet(formData);
+    const worksheet = xlsx.utils.json_to_sheet(json);
     const ws_name = 'SheetJS';
     xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
 
