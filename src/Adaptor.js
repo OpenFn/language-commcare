@@ -5,10 +5,10 @@ import {
   http,
   expandReferences,
 } from '@openfn/language-common';
+import { get, post } from '@openfn/language-http';
 import request from 'superagent';
 import FormData from 'form-data';
 import js2xmlparser from 'js2xmlparser';
-import Adaptor from 'language-http';
 import xlsx from 'xlsx';
 
 /**
@@ -207,9 +207,7 @@ export function submit(formData) {
  * @returns {Operation}
  */
 export function fetchReportData(reportId, params, postUrl) {
-  const { get, post } = Adaptor;
-
-  return get(`api/v0.5/configurablereportdata/${reportId}/`, {
+  return http.get(`api/v0.5/configurablereportdata/${reportId}/`, {
     query: function (state) {
       console.log(
         'getting from url: '.concat(
