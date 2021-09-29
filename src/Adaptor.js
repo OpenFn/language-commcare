@@ -5,10 +5,10 @@ import {
   http,
   expandReferences,
 } from '@openfn/language-common';
+import { get, post } from '@openfn/language-http';
 import request from 'superagent';
 import FormData from 'form-data';
 import js2xmlparser from 'js2xmlparser';
-import Adaptor from 'language-http';
 import xlsx from 'xlsx';
 
 /**
@@ -89,6 +89,8 @@ export function submitXls(formData, params) {
       username,
       password,
     } = state.configuration;
+
+    const json = expandReferences(formData)(state);
     const { case_type, search_field, create_new_cases } = params;
 
     const url = (hostUrl || 'https://www.commcarehq.org').concat(
@@ -98,7 +100,7 @@ export function submitXls(formData, params) {
     );
 
     const workbook = xlsx.utils.book_new();
-    const worksheet = xlsx.utils.json_to_sheet(formData);
+    const worksheet = xlsx.utils.json_to_sheet(json);
     const ws_name = 'SheetJS';
     xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
 
@@ -205,9 +207,7 @@ export function submit(formData) {
  * @returns {Operation}
  */
 export function fetchReportData(reportId, params, postUrl) {
-  const { get, post } = Adaptor;
-
-  return get(`api/v0.5/configurablereportdata/${reportId}/`, {
+  return http.get(`api/v0.5/configurablereportdata/${reportId}/`, {
     query: function (state) {
       console.log(
         'getting from url: '.concat(
