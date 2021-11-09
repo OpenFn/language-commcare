@@ -83,12 +83,7 @@ function clientPost({ url, body, username, password }) {
  */
 export function submitXls(formData, params) {
   return state => {
-    const {
-      applicationName,
-      hostUrl,
-      username,
-      password,
-    } = state.configuration;
+    const { applicationName, hostUrl, username, apiKey } = state.configuration;
 
     const json = expandReferences(formData)(state);
     const { case_type, search_field, create_new_cases } = params;
@@ -105,7 +100,7 @@ export function submitXls(formData, params) {
     xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
 
     // Generate buffer
-    const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+    const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'xls' });
     // xlsx.writeFile(workbook, 'out.xls'); // If needing to write to filesystem
 
     const data = new FormData();
@@ -121,9 +116,9 @@ export function submitXls(formData, params) {
       .post({
         url,
         data,
-        auth: { username, password },
         headers: {
           ...data.getHeaders(),
+          Authorization: `ApiKey ${username}:${apiKey}`,
         },
       })(state)
       .then(response => {
