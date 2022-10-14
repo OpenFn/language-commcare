@@ -14,7 +14,7 @@ https://github.com/dimagi/commcare/wiki/casexml20
 
 ## Documentation
 
-## configuration
+## Sample configuration
 
 The "appId" is the UUID which designates your commcare project as different from
 everyone elses. It can be found in the URL of your application when you first
