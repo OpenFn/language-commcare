@@ -1,4 +1,9 @@
-# Language CommCare [![Build Status](https://travis-ci.org/OpenFn/language-commcare.svg?branch=master)](https://travis-ci.org/OpenFn/language-commcare)
+# _⚠️ MOVED TO [OpenFn/adaptors](https://github.com/OpenFn/adaptors)! ⚠️_
+
+**N.B.: New versions are available at:
+https://github.com/OpenFn/adaptors/tree/main/packages/commcare**
+
+# Language CommCare (Archived)
 
 Language Pack for interacting with the CommCare API.
 
